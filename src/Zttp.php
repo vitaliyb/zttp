@@ -226,7 +226,11 @@ class PendingZttpRequest
     function parseQueryParams($url)
     {
         return tap([], function (&$query) use ($url) {
-            parse_str(parse_url($url, PHP_URL_QUERY), $query);
+
+            $url = parse_url($url, PHP_URL_QUERY);
+            if ($url) {
+                parse_str($url, $query);
+            }
         });
     }
 }

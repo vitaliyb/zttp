@@ -6,7 +6,10 @@ use PHPUnit\Framework\TestCase;
 
 class ZttpTest extends TestCase
 {
-    public static function setUpBeforeClass()
+
+    use \DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
+
+    public static function setUpBeforeClass(): void
     {
         ZttpServer::start();
     }
@@ -497,10 +500,11 @@ class ZttpTest extends TestCase
 
     /**
      * @test
-     * @expectedException \Zttp\ConnectionException
      */
     function client_will_force_timeout()
     {
+        $this->expectException(\Zttp\ConnectionException::class);
+
         Zttp::timeout(1)->get($this->url('/timeout'));
     }
 
